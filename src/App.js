@@ -1,26 +1,57 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import LoginForm from './components/login-form';
+import AppDashboard from './components/app-dashboard';
+import * as appActions from './actions/app-actions';
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userLoggedIn:this.props.currentUser
+    };
+
+    this.loginSubmit = this.loginSubmit.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({userLoggedIn:nextProps.currentUser});
+  }
+
+  loginSubmit(credentials) {
+    this.props.actions.appActions.userLogin(credentials)
+  }
+
+  render() {
+    console.log(this.state.userLoggedIn);
+    if(this.state.userLoggedIn===true) {
+      return(<AppDashboard/>);
+    } else {
+      return (
+      <LoginForm loginSubmit={this.loginSubmit} />
+      );
+    }
+    
+  }
 }
 
-export default App;
+function mapStoreToProps(state) {
+  return {
+    currentUser:state.login.user
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: {
+      appActions: bindActionCreators(appActions, dispatch)
+    }
+  };
+}
+
+export default connect(
+  mapStoreToProps,
+  mapDispatchToProps
+)(App);
