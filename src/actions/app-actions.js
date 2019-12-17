@@ -59,7 +59,6 @@ export function userLogin(credentials) {
         message.warning('Invalid user');
     }
     let login = {user:loggedIn};
-    console.log(credentials,login)
         return { type: types.USER_LOGIN_SUCCESS, login };
 }
 

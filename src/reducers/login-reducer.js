@@ -10,7 +10,6 @@ export default function (state = initialState.login, action) {
         }
 
         case types.LIST_USERS_SUCCESS: {
-            console.log(action);
             let users = action.userList;
             state = { ...state, userList: users };
             return state;

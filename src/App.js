@@ -25,7 +25,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.userLoggedIn);
     if(this.state.userLoggedIn===true) {
       return(<AppDashboard/>);
     } else {

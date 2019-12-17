@@ -58,7 +58,6 @@ class AppDashboard extends Component {
   }
 
   render() {
-      console.log(this.state.userList)
     return (
       <Layout className="layout">
         <Header>
